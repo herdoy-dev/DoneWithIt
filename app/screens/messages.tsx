@@ -2,7 +2,9 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import ListItem from "@/components/ListItem";
+import ListItemDeleteAction from "@/components/ListItemDeleteAction";
 import colors from "@/constants/colors";
+import { useState } from "react";
 
 const listings = [
   {
@@ -32,11 +34,18 @@ const listings = [
 ];
 
 const Messages = () => {
+  const [messages, setMessages] = useState(listings);
+
+  const [isLoadign, setLoading] = useState(false);
+
+  const handleDelete = (id: number) =>
+    setMessages(messages.filter((m) => m.id !== id));
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Messages</Text>
       <FlatList
-        data={listings}
+        data={messages}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         renderItem={({ index, item }) => (
           <ListItem
@@ -44,8 +53,13 @@ const Messages = () => {
             image={item.image}
             title={item.title}
             subtitle={item.price}
+            RightAction={() => (
+              <ListItemDeleteAction onPress={() => handleDelete(item.id)} />
+            )}
           />
         )}
+        refreshing={isLoadign}
+        onRefresh={() => setMessages(listings)}
       />
     </SafeAreaView>
   );
@@ -63,7 +77,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   separator: {
-    marginVertical: 10,
     height: 1,
     backgroundColor: colors.lightGray,
   },
