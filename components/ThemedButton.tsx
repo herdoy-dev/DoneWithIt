@@ -54,10 +54,10 @@ const styles = StyleSheet.create({
   },
 
   textBase: {
-    fontSize: 16,
+    fontSize: 15,
     letterSpacing: 2,
     textTransform: "uppercase",
-    fontWeight: "700",
+    fontWeight: "500",
   },
 
   textOutline: {

@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     width: "100%",
     height: 280,
-    elevation: 5,
   },
 
   image: {

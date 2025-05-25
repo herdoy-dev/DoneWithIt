@@ -1,7 +1,7 @@
-import Messages from "./screens/messages";
+import Welcome from "./screens/Welcome";
 
-const HomePage = () => {
-  return <Messages />;
+const Home = () => {
+  return <Welcome />;
 };
 
-export default HomePage;
+export default Home;

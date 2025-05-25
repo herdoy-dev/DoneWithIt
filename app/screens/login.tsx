@@ -1,14 +1,109 @@
-import { StyleSheet, Text } from "react-native";
+import ErrorText from "@/components/ErrorText";
+import ThemedButton from "@/components/ThemedButton";
+import colors from "@/constants/colors";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { Image, StyleSheet, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { z } from "zod";
 
-const Login = () => {
+const loginSchema = z.object({
+  email: z
+    .string()
+    .nonempty("Email is required")
+    .email("Invalid email address"),
+  password: z
+    .string()
+    .nonempty("Password is required")
+    .min(6, "Password must be at least 6 characters"),
+});
+
+type LoginFormValues = z.infer<typeof loginSchema>;
+
+const LoginPage = () => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = (data: LoginFormValues) => {
+    console.log("Login Data:", data);
+  };
+
   return (
     <SafeAreaView>
-      <Text>LoginPage</Text>
+      <View style={styles.container}>
+        <View style={styles.logoContainer}>
+          <Image
+            style={styles.logo}
+            source={require("../../assets/images/logo-red.png")}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder="Email Address"
+                keyboardType="email-address"
+                value={value}
+                onChangeText={onChange}
+              />
+            )}
+          />
+          {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
+
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+                secureTextEntry
+                value={value}
+                onChangeText={onChange}
+              />
+            )}
+          />
+          {errors.password && <ErrorText>{errors.password.message}</ErrorText>}
+
+          <ThemedButton text="Login" onPress={handleSubmit(onSubmit)} />
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
 
-export default Login;
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 50,
+  },
+  logoContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
+  },
+  logo: {
+    width: 120,
+    height: 120,
+  },
+  inputContainer: {
+    padding: 10,
+    gap: 20,
+  },
+  input: {
+    borderWidth: 0.5,
+    borderColor: colors.lightGray,
+    height: 50,
+    borderRadius: 25,
+    paddingHorizontal: 10,
+  },
+});
 
-const styles = StyleSheet.create({});
+export default LoginPage;

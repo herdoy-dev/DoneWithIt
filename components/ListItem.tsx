@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 16,
-    backgroundColor: "#f1f1f1",
+    backgroundColor: colors.white,
+    paddingHorizontal: 10,
   },
   image: {
     width: 60,

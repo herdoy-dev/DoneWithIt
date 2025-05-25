@@ -23,12 +23,12 @@ const Welcome = () => {
         <View style={styles.buttonWrapper}>
           <ThemedButton
             text="Login"
-            onPress={() => router.push("/screens/login")}
+            onPress={() => router.push("/screens/Login")}
           />
           <ThemedButton
             color={colors.secondary}
             text="Register"
-            onPress={() => router.push("/screens/register")}
+            onPress={() => router.push("/screens/Register")}
           />
         </View>
       </View>
