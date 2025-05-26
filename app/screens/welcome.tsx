@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
     fontWeight: "700",
     letterSpacing: 2,
+    color: "#666",
   },
   buttonWrapper: {
     width: "100%",

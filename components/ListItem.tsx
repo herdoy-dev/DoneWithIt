@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ReactNode } from "react";
 import {
   Image,
@@ -58,6 +59,13 @@ const ListItem = ({
                   {subtitle}
                 </Text>
               </View>
+              {RightAction && (
+                <MaterialCommunityIcons
+                  name="chevron-right"
+                  size={25}
+                  color={colors.gray}
+                />
+              )}
             </View>
           </TouchableWithoutFeedback>
         </Animated.View>

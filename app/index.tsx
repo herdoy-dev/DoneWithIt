@@ -1,7 +1,7 @@
-import Welcome from "./screens/Welcome";
+import NewListing from "./screens/NewListing";
 
 const Home = () => {
-  return <Welcome />;
+  return <NewListing />;
 };
 
 export default Home;

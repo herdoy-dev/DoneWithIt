@@ -1,9 +1,8 @@
-import ErrorText from "@/components/ErrorText";
 import ThemedButton from "@/components/ThemedButton";
-import colors from "@/constants/colors";
+import ThemedInput from "@/components/ThemedInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { Image, StyleSheet, TextInput, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { z } from "zod";
 
@@ -47,31 +46,31 @@ const LoginPage = () => {
             control={control}
             name="email"
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                style={styles.input}
+              <ThemedInput
+                icon="email-outline"
                 placeholder="Email Address"
                 keyboardType="email-address"
                 value={value}
                 onChangeText={onChange}
+                error={errors?.email?.message}
               />
             )}
           />
-          {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
 
           <Controller
             control={control}
             name="password"
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                style={styles.input}
+              <ThemedInput
+                icon="eye-off-outline"
                 placeholder="Password"
                 secureTextEntry
                 value={value}
                 onChangeText={onChange}
+                error={errors?.password?.message}
               />
             )}
           />
-          {errors.password && <ErrorText>{errors.password.message}</ErrorText>}
 
           <ThemedButton text="Login" onPress={handleSubmit(onSubmit)} />
         </View>
@@ -90,19 +89,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   logo: {
-    width: 120,
-    height: 120,
+    width: 100,
+    height: 100,
   },
   inputContainer: {
     padding: 10,
     gap: 20,
-  },
-  input: {
-    borderWidth: 0.5,
-    borderColor: colors.lightGray,
-    height: 50,
-    borderRadius: 25,
-    paddingHorizontal: 10,
   },
 });
 
