@@ -1,5 +1,6 @@
 import CategoryPickerItem from "@/components/CategoryPickerItem";
 import ThemedButton from "@/components/ThemedButton";
+import ThemedImagePicker from "@/components/ThemedImagePicker";
 import ThemedInput from "@/components/ThemedInput";
 import ThemedPicker from "@/components/ThemedPicker";
 import colors from "@/constants/colors";
@@ -71,6 +72,12 @@ const categories = [
 
 const formSchema = z.object({
   title: z.string().nonempty("Title is required"),
+  images: z.array(
+    z.object({
+      id: z.string(),
+      uri: z.string(),
+    })
+  ),
   price: z
     .number({ invalid_type_error: "Price must be a number" })
     .positive("Price must be greater than 0"),
@@ -100,6 +107,18 @@ const NewListing = () => {
       <View style={styles.container}>
         <Text style={styles.title}>Create New Listing</Text>
         <View style={styles.inputContainer}>
+          <Controller
+            control={control}
+            name="images"
+            render={({ field: { onChange, value } }) => (
+              <ThemedImagePicker
+                selectedImages={value}
+                onSelectedImage={(images) => onChange(images)}
+                maxImages={4}
+                error={errors?.images?.message}
+              />
+            )}
+          />
           <Controller
             control={control}
             name="title"

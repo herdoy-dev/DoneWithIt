@@ -14,7 +14,7 @@ const CategoryPickerItem = ({ label, onPress, color, icon }: Props) => {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.container}>
-        <Icon name={icon} color={color} size={80} rounded={true} />
+        <Icon name={icon} color={color} size={80} />
         <Text style={styles.label}>{label}</Text>
       </View>
     </TouchableWithoutFeedback>

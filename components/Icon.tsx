@@ -6,7 +6,7 @@ interface Props {
   name: keyof typeof MaterialCommunityIcons.glyphMap;
   size?: number;
   color?: string;
-  rounded?: boolean;
+  rounded?: number;
 }
 
 const Icon = ({ name, size = 50, color, rounded }: Props) => {
@@ -16,7 +16,7 @@ const Icon = ({ name, size = 50, color, rounded }: Props) => {
         width: size,
         height: size,
         backgroundColor: color,
-        borderRadius: rounded ? size * 0.5 : 0,
+        borderRadius: !rounded ? size * 0.5 : rounded,
         alignItems: "center",
         justifyContent: "center",
       }}
