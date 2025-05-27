@@ -1,6 +1,6 @@
 import CategoryPickerItem from "@/components/CategoryPickerItem";
 import ThemedButton from "@/components/ThemedButton";
-import ThemedImagePicker from "@/components/ThemedImagePicker";
+import ThemedImagesPicker from "@/components/ThemedImagesPicker";
 import ThemedInput from "@/components/ThemedInput";
 import ThemedPicker from "@/components/ThemedPicker";
 import colors from "@/constants/colors";
@@ -18,13 +18,7 @@ const categories = [
     color: "#ffbf00",
     icon: "floor-lamp",
   },
-  {
-    id: "2",
-    label: "Cars",
-    value: "2",
-    color: colors.secondary,
-    icon: "car",
-  },
+  { id: "2", label: "Cars", value: "2", color: colors.secondary, icon: "car" },
   { id: "3", label: "Camera", value: "3", color: "#6495fd", icon: "camera" },
   {
     id: "4",
@@ -72,12 +66,7 @@ const categories = [
 
 const formSchema = z.object({
   title: z.string().nonempty("Title is required"),
-  images: z.array(
-    z.object({
-      id: z.string(),
-      uri: z.string(),
-    })
-  ),
+  images: z.array(z.string()).nonempty("Please add at least one image"),
   price: z
     .number({ invalid_type_error: "Price must be a number" })
     .positive("Price must be greater than 0"),
@@ -96,6 +85,13 @@ const NewListing = () => {
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      images: [],
+      price: undefined,
+      category: "",
+      description: "",
+    },
   });
 
   const onSubmit = (data: FormValues) => {
@@ -110,15 +106,18 @@ const NewListing = () => {
           <Controller
             control={control}
             name="images"
-            render={({ field: { onChange, value } }) => (
-              <ThemedImagePicker
-                selectedImages={value}
-                onSelectedImage={(images) => onChange(images)}
-                maxImages={4}
+            render={({ field: { onChange, value = [] } }) => (
+              <ThemedImagesPicker
+                uris={value}
+                onPickImage={(uri) => onChange([...value, uri])}
+                onChangeImage={(uri) =>
+                  uri && onChange(value.filter((imageUri) => imageUri !== uri))
+                }
                 error={errors?.images?.message}
               />
             )}
           />
+
           <Controller
             control={control}
             name="title"
@@ -139,7 +138,7 @@ const NewListing = () => {
               <ThemedInput
                 placeholder="Price"
                 inputMode="decimal"
-                value={value?.toString()}
+                value={value?.toString() || ""}
                 onChangeText={(text) => onChange(Number(text))}
                 error={errors?.price?.message}
               />
