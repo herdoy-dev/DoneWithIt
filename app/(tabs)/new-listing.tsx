@@ -4,6 +4,7 @@ import ThemedImagesPicker from "@/components/ThemedImagesPicker";
 import ThemedInput from "@/components/ThemedInput";
 import ThemedPicker from "@/components/ThemedPicker";
 import colors from "@/constants/colors";
+import useLocation from "@/hooks/useLocation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { StyleSheet, Text, View } from "react-native";
@@ -82,6 +83,7 @@ const NewListing = () => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -94,8 +96,15 @@ const NewListing = () => {
     },
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log("Form Data:", data);
+  const { location } = useLocation();
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      console.log("Form Data:", { ...data, location });
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

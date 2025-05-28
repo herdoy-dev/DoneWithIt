@@ -45,7 +45,12 @@ const ThemedImagePicker = ({ uri, onPickImage, onChangeImage }: Props) => {
       {!uri ? (
         <TouchableWithoutFeedback onPress={pickImage}>
           <View>
-            <Icon name="camera" size={100} rounded={10} color={colors.gray} />
+            <Icon
+              name="camera"
+              size={80}
+              rounded={10}
+              color={colors.lightGray}
+            />
           </View>
         </TouchableWithoutFeedback>
       ) : (
@@ -66,8 +71,8 @@ export default ThemedImagePicker;
 
 const styles = StyleSheet.create({
   container: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     borderRadius: 10,
     overflow: "hidden",
     position: "relative",
@@ -78,12 +83,12 @@ const styles = StyleSheet.create({
     right: 4,
   },
   imageContainer: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     position: "relative",
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
   },
 });

@@ -9,25 +9,25 @@ import { useState } from "react";
 const listings = [
   {
     id: "1",
-    image: require("../../assets/images/jacket.jpg"),
+    image: require("../../../assets/images/jacket.jpg"),
     title: "Jhon Week",
     price: "Welcome bro",
   },
   {
     id: "2",
-    image: require("../../assets/images/couch.jpg"),
+    image: require("../../../assets/images/couch.jpg"),
     title: "Mosh Hamedani",
     price: "Everyting okay?",
   },
   {
     id: "3",
-    image: require("../../assets/images/herdoy.jpg"),
+    image: require("../../../assets/images/herdoy.jpg"),
     title: "Herdoy Almamun",
     price: "How Are you?",
   },
   {
     id: "4",
-    image: require("../../assets/images/jacket.jpg"),
+    image: require("../../../assets/images/jacket.jpg"),
     title: "Abdul Jobbar",
     price: "Hello brother",
   },

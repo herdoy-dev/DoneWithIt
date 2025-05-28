@@ -1,39 +1,37 @@
 import ThemedButton from "@/components/ThemedButton";
 import ThemedInput from "@/components/ThemedInput";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { navigate } from "expo-router/build/global-state/routing";
 import { Controller, useForm } from "react-hook-form";
 import { Image, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { z } from "zod";
 
-const formSchema = z
-  .object({
-    name: z.string().nonempty("Name is required"),
-    email: z
-      .string()
-      .nonempty("Email is required")
-      .email("Invalid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
-    confirmPassword: z.string().nonempty("Please confirm your password"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Passwords do not match",
-  });
+const loginSchema = z.object({
+  email: z
+    .string()
+    .nonempty("Email is required")
+    .email("Invalid email address"),
+  password: z
+    .string()
+    .nonempty("Password is required")
+    .min(6, "Password must be at least 6 characters"),
+});
 
-type FormValues = z.infer<typeof formSchema>;
+type LoginFormValues = z.infer<typeof loginSchema>;
 
-const Register = () => {
+const LoginPage = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log("Form Data:", data);
+  const onSubmit = (data: LoginFormValues) => {
+    console.log("Login Data:", data);
+    navigate("/(tabs)/(listings)");
   };
 
   return (
@@ -42,24 +40,10 @@ const Register = () => {
         <View style={styles.logoContainer}>
           <Image
             style={styles.logo}
-            source={require("../../assets/images/logo-red.png")}
+            source={require("../assets/images/logo-red.png")}
           />
         </View>
         <View style={styles.inputContainer}>
-          <Controller
-            control={control}
-            name="name"
-            render={({ field: { onChange, value } }) => (
-              <ThemedInput
-                icon="account-outline"
-                placeholder="First Name"
-                value={value}
-                onChangeText={onChange}
-                error={errors?.name?.message}
-              />
-            )}
-          />
-
           <Controller
             control={control}
             name="email"
@@ -90,22 +74,7 @@ const Register = () => {
             )}
           />
 
-          <Controller
-            control={control}
-            name="confirmPassword"
-            render={({ field: { onChange, value } }) => (
-              <ThemedInput
-                icon="eye-off-outline"
-                placeholder="Confirm Password"
-                secureTextEntry
-                value={value}
-                onChangeText={onChange}
-                error={errors?.confirmPassword?.message}
-              />
-            )}
-          />
-
-          <ThemedButton text="Register" onPress={handleSubmit(onSubmit)} />
+          <ThemedButton text="Login" onPress={handleSubmit(onSubmit)} />
         </View>
       </View>
     </SafeAreaView>
@@ -131,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Register;
+export default LoginPage;

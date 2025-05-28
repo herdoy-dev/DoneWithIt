@@ -32,7 +32,7 @@ const MyAccount = () => {
         style={{ height: 80, backgroundColor: "white", paddingHorizontal: 10 }}
       >
         <ListItem
-          image={require("../../assets/images/herdoy.jpg")}
+          image={require("../../../assets/images/herdoy.jpg")}
           title="Herdoy Almamun"
           subtitle="herdoycode@gmail.com"
         />

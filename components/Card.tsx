@@ -1,22 +1,32 @@
 import colors from "@/constants/colors";
 import React from "react";
-import { Image, ImageURISource, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  ImageURISource,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 
 interface Props {
   image: ImageURISource;
   title: string;
   subtitle: string;
+  onPress?: () => void;
 }
 
-const Card = ({ image, title, subtitle }: Props) => {
+const Card = ({ image, title, subtitle, onPress }: Props) => {
   return (
-    <View style={styles.card}>
-      <Image resizeMode="cover" style={styles.image} source={image} />
-      <View style={styles.cardBody}>
-        <Text style={styles.title}> {title} </Text>
-        <Text style={styles.subtitle}> {subtitle} </Text>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={styles.card}>
+        <Image resizeMode="cover" style={styles.image} source={image} />
+        <View style={styles.cardBody}>
+          <Text style={styles.title}> {title} </Text>
+          <Text style={styles.subtitle}> {subtitle} </Text>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
